@@ -1,0 +1,33 @@
+Docker related Commands:
+
+
+Initial Command to run minio:
+
+docker run -p 9000:9000 -p 9001:9001 `
+  --name minio `
+  -e "MINIO_ROOT_USER=minioadmin" `
+  -e "MINIO_ROOT_PASSWORD=minioadmin" `
+  -v "C:\minio\data:/data" `
+  quay.io/minio/minio server /data --console-address ":9001"
+
+
+http://127.0.0.1:9001/ : This server is the MINIO Object Store Community Edition.
+
+If we closed this tab(http://127.0.0.1:9001/), then if we want to again visit this tab : run this command ---> "docker rm -f minio"
+After that run Initial command then you will get the server. We have to run these commands in "Windows Powershell". 
+
+
+
+Initial Command to run redis in docker Desktop: "docker run -d --name redis -p 6379:6379 redis"
+
+docker start redis (This command is to run the existed redis)
+
+
+
+command for uvicorn details : uvicorn --help
+command for port change : uvicorn main:app --reload --port 1234
+
+
+command to check running proccesses in a port : netstat -ano | findstr :<port> (netstat -ano | findstr :8000) 
+command to kill the process : taskkill /PID <process_id> /F (taskkill /PID 12345 /F)
+run these commands on cmd administrator
