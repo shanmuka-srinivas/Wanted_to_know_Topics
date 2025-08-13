@@ -1,0 +1,12 @@
+Alembic Migrations Commands :
+
+
+----->  pip install alembic
+
+----->  alembic init alembic  (This command is the initial command, it will generate the migrations folder "alembic")
+
+----->  alembic revision --autogenerate -m "Initial migration"
+
+----->  alembic upgrade head
+
+(**** Whenever we add a another column to an existed model we need to run the above 2 commands)
