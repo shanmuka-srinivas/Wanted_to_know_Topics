@@ -1,0 +1,86 @@
+command to run the celery tasks : "celery -A src.celery_tasks.c_app worker --loglevel=info --pool=solo"
+
+command to run the celery flower : "celery -A src.celery_tasks.c_app flower" (It is like a swagger)
+
+ in a command src.celery_tasks.c_app (Its is a <folder_name>.<file_name>.<instance_name>)
+
+
+
+If you're hitting performance or reliability limitations with FastAPI's BackgroundTasks, then you'll likely hear about Celery and Redis.
+Let’s break it down simply:
+
+✅ What Is Celery?
+
+Celery is a powerful task queue system used to run background jobs, scheduled tasks, and asynchronous workers.
+Think of it as an engine for executing tasks outside your FastAPI process
+It works by delegating work to worker processes
+It supports retries, scheduling, monitoring, and parallelism
+
+
+✅ What Is Redis?
+
+Redis is a fast, in-memory key-value data store. Celery uses it as a message broker — basically a middleman between FastAPI and Celery workers.
+FastAPI adds tasks → Redis queues them → Celery workers pick them up
+Redis ensures tasks are persisted and delivered, even if the app restarts
+
+
+     ┌──────────────┐
+     │   FastAPI         │
+     │  (main app)       │
+     └──────────────┘
+             │
+             │ send task
+             ▼
+     ┌──────────────┐
+     │    Redis          │  ← Message Broker
+     └──────────────┘
+             │
+             │ fetch task
+             ▼
+     ┌──────────────┐
+     │   Celery          │  ← Worker Process
+     │  (runs task)      │
+     └──────────────┘
+
+
+
+✅ Why Use Celery With FastAPI?
+
+	Feature    	                 Why It's Useful
+⚙️ Heavy Background Work	BackgroundTasks are limited — Celery can handle large workloads, long tasks
+🔁 Retry Failed Jobs		Celery can retry failed email sending, database sync, etc.
+🕒 Schedule Jobs		Run tasks every hour, daily, etc. (via Celery + beat)
+🧵 Parallel Execution		Multiple Celery workers = parallel task processing
+🛑 App Isolation		If Celery fails, FastAPI still works (tasks are isolated)
+📈 Monitoring			You can monitor and control tasks using Flower (a web UI for Celery)
+
+
+
+✅ Example Use Cases for Celery in FastAPI
+
+---> Sending bulk emails to 1000+ users
+---> Generating large reports or PDFs
+---> Data syncing with third-party APIs
+---> Scheduled database cleanup
+---> Video encoding or file conversion
+---> Retry failed API/webhook calls
+
+
+
+🧠 When Should You Use Celery?
+
+Use Celery when:
+
+---> You have complex or long-running tasks
+---> You need retry logic or task persistence
+---> You’re building a scalable production system
+---> You want scheduled jobs
+---> You’re doing parallel processing
+
+Use BackgroundTasks only for:
+
+---> Very lightweight, quick tasks
+---> No need for reliability, retry, or scale
+
+
+
