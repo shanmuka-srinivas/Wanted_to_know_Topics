@@ -1,0 +1,19 @@
+Process to delete commits in PR :
+
+1)  First we have to checkout to the branch (from the branch we have raised the PR)
+
+2)  Start an interactive rebase to rewrite history : run the command - "git rebase -i HEAD~6" (here 6 means it will retrieve the last 6 commits)
+
+3)  After run the above command, an editor will open in terminal, in that it will shows the commits like :
+    								pick 57f960c added pandas and openpyxl...
+								pick f194a9d added api to download...
+								pick fed4b4d added format_minutes...
+
+4)  We have to change the word pick to "drop" for the commits whatever we want to delete, to edit we have to click "i" in keyboard the it will
+    go to the editor mode.
+
+5)  After changes has done, we have to escape from that edit mode, for that click "Esc" button.
+
+6)  Then to save the changes in that editor, to save and quit from  that editor we have to type ":wq" and hit "Enter" button.
+
+7)  Then force_push to update the PR : "git push origin feature/organisation_updated --force"

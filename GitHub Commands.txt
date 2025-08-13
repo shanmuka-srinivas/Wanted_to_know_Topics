@@ -1,0 +1,41 @@
+Git Commands :
+
+----->  git clone <repo_url>  (This command is to pull the project)
+
+----->  git add .
+	git commit -m "commit message"
+	git push origin <branch_name>  (These three commands should be used to push the changes)
+
+----->  git pull origin <branch_name>  (This command is used to pull the changes. The changes those are made in GitHub Repo)
+
+----->  git branch  (This command will shows all branches that are present in that Repo and Additionally it will shows - On which branch you are in)
+
+----->  git branch <new_branch_name>  (This command will create the new branch in Repo, but it will not shows in Repo,
+				       Once you have done the Push command then only it will visible in Repo)
+
+----->  git checkout <branch_name>  (This command is used to change the branch from - The branch you are in to Another Branch)
+
+----->  git checkout -b <new_branch_name>  (This command is used to change the branch from - The branch you are in to Another New Branch, 
+					    the new branch will create itself while the command was executed)
+
+----->  git status  (This command will gives the information about the changes you should push)
+
+----->  git commit -am "commit message"  (This command is used to commit and add at a time)
+
+----->  git log --oneline  (This command is used to check the details about the merges you have made)
+
+----->  git log  (This command is used to see the recent commited details)
+
+----->  git branch -d <branch_name>  (This command is used to delete the local branch,
+        don't run this command for the branch which is present in the remote i.e Github).
+
+
+
+Git Commands for Newly(Initially) Push the Project to REPO :
+
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin <repo_url>.git
+git push -u origin main

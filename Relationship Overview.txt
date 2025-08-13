@@ -1,0 +1,22 @@
+Relationship Overview :
+
+1. One Project → Many Task
+   A single project can have multiple tasks. This is a One-to-Many relationship.
+
+   class Project:
+       tasks: List["Task"] = Relationship(back_populates="project")
+
+   class Task:
+       project: "Project" = Relationship(back_populates="tasks")
+       project_id: uuid.UUID = Field(foreign_key="project.project_id")
+
+
+2. One Task → Many Activity
+   A single task can have multiple activities. This is a One-to-Many relationship.
+
+   class Task:
+       activities: List["Activity"] = Relationship(back_populates="task")
+
+   class Activity:
+       task: "Task" = Relationship(back_populates="activities")
+       task_id: uuid.UUID = Field(foreign_key="task.task_id")

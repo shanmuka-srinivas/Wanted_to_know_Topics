@@ -1,0 +1,77 @@
+What is Docker?
+
+* Docker is a platform to run software in isolated, lightweight containers.
+
+* A container is like a mini-computer with:
+
+  ---> Its own filesystem
+
+  ---> Its own dependencies
+
+  ---> Its own configuration
+
+* Unlike virtual machines, containers share the host OS kernel, so they are much lighter and faster to start.
+
+* Without Docker → “It works on my machine” problem: you install Python, dependencies, DB locally; other devs might have different versions.
+
+* With Docker → The app, dependencies, configs, OS environment are all packaged into a container that runs the same everywhere.
+
+
+Internal workflow of Docker :
+
+* Dockerfile → Blueprint for building a container image.
+
+  ---> It has instructions like FROM python:3.11, COPY, RUN pip install ....
+
+  ---> Docker reads it line by line, creating layers.
+
+  ---> Each layer is cached → faster rebuilds.
+
+* docker build:
+
+  ---> Takes the Dockerfile.
+
+  ---> Creates an image (a snapshot of filesystem + environment).
+
+  ---> This image is stored in your local Docker registry (or remote). 
+
+* Docker run:
+
+  ---> Starts a container from that image.
+
+  ---> A container = a running instance of that image.
+
+* docker-compose.yml:
+
+  ---> Orchestrates multiple containers together (multi-service setup).
+
+  ---> Defines:
+
+        * Which images to build/run
+
+	* Networking between them
+
+	* Environment variables
+
+	* Volumes (persistent data)
+
+  ---> Runs them in one network so they can talk to each other (auth-service, db, redis, etc.).
+
+
+restart: always 
+"If this container stops for any reason (crash, manual stop, system reboot), start it again automatically."
+
+
+Why we use Docker in big FastAPI projects :
+
+* Environment consistency → Dev, staging, production all run exactly the same environment.
+
+* Isolation → Different microservices can have different Python versions, libraries, OS packages without conflict. 
+
+* Easier onboarding → New devs don’t install DB, RabbitMQ, Redis manually — just docker-compose up.
+
+* Microservices orchestration → Run FastAPI API gateway, auth service, DB, Redis, RabbitMQ together locally.
+
+* Portability → Ship your app as an image → runs anywhere with Docker (cloud, local, CI/CD).
+
+* Reproducible builds → You can rebuild the exact same version anytime.

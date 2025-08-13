@@ -1,0 +1,55 @@
+sync vs async :
+
+* Sync function → def get_users(): ...
+
+   ---> Runs in a blocking way.
+
+   ---> The function will run from start to finish before Python moves to the next request.
+
+   ---> If it waits for I/O (like DB query, HTTP call), the thread is blocked and can’t do other work.
+
+* Async function → async def get_users(): ...
+
+  ---> Runs in a non-blocking way (with await points).
+
+  ---> When waiting for I/O, it yields control to the event loop so other requests can run.
+
+  ---> Requires an event loop (like uvicorn + asyncio).
+
+
+
+* Internal workflow of Sync route :
+
+  ---> Request comes in → Uvicorn accepts the HTTP connection.
+
+  ---> Uvicorn hands the request to FastAPI’s request handler.
+
+  ---> Your sync function is called in a thread from the ThreadPoolExecutor.
+
+  ---> While your function is doing a DB query or reading a file, that thread is blocked.
+
+  ---> No other work can be done in that thread until it finishes.
+
+  ---> Once done, result is returned and FastAPI serializes the response.
+
+⚠ Problem: If you have 100 requests and each takes 1s blocking time, you might need 100 threads — more memory & CPU overhead.
+
+
+* Internal workflow of Async route :
+
+  ---> Request comes in → Uvicorn accepts it.
+
+  ---> Your async function is scheduled in the asyncio event loop (single-threaded).
+
+  ---> When it hits await slow_db_query_async():
+
+  ---> The function pauses (doesn’t block the thread).
+
+  ---> The event loop picks another request’s coroutine to run.
+
+  ---> When the DB returns the result, the event loop resumes your function from where it left off.
+
+  ---> Response is returned without blocking other requests.
+
+✅ Benefit: 1 thread can handle thousands of connections if most of them are waiting on I/O.
+
