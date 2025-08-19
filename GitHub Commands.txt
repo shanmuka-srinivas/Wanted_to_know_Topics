@@ -29,6 +29,8 @@ Git Commands :
 ----->  git branch -d <branch_name>  (This command is used to delete the local branch,
         don't run this command for the branch which is present in the remote i.e Github).
 
+----->  git remote set-url origin <repo_url>.git (This command is used to set the repositery in our editor)
+
 
 
 Git Commands for Newly(Initially) Push the Project to REPO :
@@ -38,4 +40,5 @@ git add .
 git commit -m "first commit"
 git branch -M main
 git remote add origin <repo_url>.git
+
 git push -u origin main
