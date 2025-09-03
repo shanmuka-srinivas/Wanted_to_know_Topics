@@ -29,7 +29,47 @@ Git Commands :
 ----->  git branch -d <branch_name>  (This command is used to delete the local branch,
         don't run this command for the branch which is present in the remote i.e Github).
 
+----->  git push origin --delete <branch-name> (This command is used to delete the remote branch)
+
 ----->  git remote set-url origin <repo_url>.git (This command is used to set the repositery in our editor)
+
+----->  git remote -v (This command is used to check that in what repo currently we are in)
+
+
+
+----->  (Change Git Config) You can set your email in your editor(Vscode, Pycharm etc....) at two levels:
+
+	1) Global (affects all repos on your machine):
+
+     	---> git config --global user.name "Your New Name"
+     	---> git config --global user.email "your_new_email@example.com"
+
+
+	2) Local (only for the current project): Go to your project folder in terminal (inside PyCharm or system terminal):
+
+   	---> git config user.name "Your New Name"
+   	---> git config user.email "your_new_email@example.com"
+
+
+----->  You can rename a branch locally and remotely. Since you already pushed it, here’s the clean way:
+
+	🔹 1. Rename branch locally
+
+	    If you are on that branch right now:
+
+	        ---> git branch -m new-branch-name
+
+	    If you are on another branch:
+
+		---> git branch -m old-branch-name new-branch-name
+
+	🔹 2. Push the renamed branch to remote
+
+	    	---> git push origin new-branch-name
+
+	🔹 3. Delete the old branch from remote (Remove the incorrectly named one)
+
+	    	---> git push origin --delete old-branch-name
 
 
 
@@ -40,5 +80,4 @@ git add .
 git commit -m "first commit"
 git branch -M main
 git remote add origin <repo_url>.git
-
 git push -u origin main
